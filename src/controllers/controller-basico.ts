@@ -15,13 +15,16 @@ export class ControllerBasico implements IController {
     }
 
     public async handle(req: Request, resp: Response): Promise<void> {
-        const { valor } = req.headers;
+        // const { valor } = req.query;
+        // const { valor } = req.body;
+        const { valor } = req.params;
 
-        console.log('ControllerBasico.metodoBasico() chamado');
+        console.log('ControllerBasico.metodoBasico() chamado', valor);
         const dto_usecase: IEntradaUseCaseBasico = {
             valor: parseInt(valor as string),
         };
         const resposta: ISaidaUseCaseBasico = await this.uc.perform(dto_usecase);
+        console.log('Resposta UseCase', resposta.valor);
         
         const minha_resposta = {
             mensagem: 'ControllerBasico.metodoBasico() chamado',
