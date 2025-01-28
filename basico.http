@@ -3,6 +3,13 @@
 
 @endereco=http://localhost:3000
 
+
+#########
+
+GET {{endereco}}/vivo
+
+#########
+
 GET {{endereco}}/basico/10
 Content-Type: application/json
 
@@ -16,4 +23,5 @@ Content-Type: application/json
     "idade": 30
 }
 
+#########
 
