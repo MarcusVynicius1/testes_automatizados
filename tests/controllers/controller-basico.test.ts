@@ -1,11 +1,12 @@
-import { IUseCase } from "contracts/iusecase";
-import { ControllerBasico } from "controllers/controller-basico";
-import { IEntradaUseCaseBasico, ISaidaUseCaseBasico } from "domain/usecases/usecase-basico";
+import { IUseCase } from "../../src/contracts/iusecase";
+import { ControllerBasico } from "../../src/controllers/controller-basico";
+import { IEntradaUseCaseBasico, ISaidaUseCaseBasico } from "../../src/domain/usecases/usecase-basico";
 import { Request, Response } from "express";
 
 class UseCaseFake implements IUseCase<IEntradaUseCaseBasico, ISaidaUseCaseBasico> {
     chamado: boolean = false;
     async perform(entrada: IEntradaUseCaseBasico): Promise<ISaidaUseCaseBasico> {
+        this.chamado = true;
         return {
             valor: 0,
         } as ISaidaUseCaseBasico;
@@ -34,35 +35,32 @@ class ResponseFake {
 }
 
 function makeSUT() {
-    const reqStub = {
+    const requestStub = {
         params: {
             valor: '10',
         },
     } as any as Request;
-    const respFake = new ResponseFake();
+    const responseFake = new ResponseFake();
     const uc = new UseCaseFake();
     const controller = new ControllerBasico(uc);
-    return { uc, controller, reqStub, respFake };
+    return { uc, controller, requestStub, responseFake };
 }
 
 describe('ControllerBasico', () => {
     
-    
     it('deve instanciar ControllerBasico', () => {
-        let { uc, controller, reqStub, respFake } = makeSUT();
+        let { uc, controller, requestStub, responseFake } = makeSUT();
         expect(controller).toBeDefined();
     });
 
     it('deve chamar handle', async () => {
-        let { uc, controller, reqStub, respFake } = makeSUT();
-        await controller.handle(reqStub, respFake as any as Response);
+        let { uc, controller, requestStub, responseFake } = makeSUT();
+        await controller.handle(requestStub, responseFake as any as Response);
         
         expect(uc.chamado).toBe(true);
-        expect(respFake.statusCodeInformado).toBe(200);
-        expect(respFake.jsonInformado).toBe({
-            mensagem: 'ControllerBasico.metodoBasico() chamado',
-            valor: 0,
-        });
+        expect(responseFake.statusCodeInformado).toBe(200);
+        expect(responseFake.jsonInformado.mensagem).toBe('ControllerBasico.metodoBasico() chamado');
+        expect(responseFake.jsonInformado.valor).toBe(0);
         
     });
 
