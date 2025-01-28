@@ -1,7 +1,7 @@
 npm init -y
 
 export USUARIO=flcs
-export PROJETO=exemplo02
+export PROJETO=exemplo02_2025_01_28
 
 git init .
 # git remote add origin https://gitlab.com/$(USUARIO)/$(PROJETO).git
@@ -20,7 +20,9 @@ npm install -D typescript
 npm install -D @types/node
 npm install -D ts-node-dev
 
+npx tsc --init
 
 git pull ; git add . ; git commit -m 'alteracoes feitas' ; git push
 
+instalar extensao "Rest Client" no VSCode
 
