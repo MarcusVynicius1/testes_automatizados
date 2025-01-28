@@ -16,7 +16,7 @@ export class UseCaseBasico implements IUseCase<IEntradaUseCaseBasico, ISaidaUseC
     public async perform(entrada: IEntradaUseCaseBasico): Promise<ISaidaUseCaseBasico> {
         const { valor } = entrada;
 
-        console.log('UseCaseBasico.metodoBasico() chamado');
+        console.log('UseCaseBasico.metodoBasico() chamado', valor);
         const valor_processado: number = valor;
 
         const saida: ISaidaUseCaseBasico = {
